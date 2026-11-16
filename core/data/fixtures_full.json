@@ -1,0 +1,338 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$75e8cb874bf50bbb43aba4d1$5EWSbQ1RtJxZhbEjsA1QpZVjQkFBz7R6GNa1pATQjyY=",
+      "last_login": "2026-11-15T09:00:00Z",
+      "is_superuser": true,
+      "first_name": "Админ",
+      "last_name": "Системный",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2026-10-01T10:00:00Z",
+      "email": "admin@example.com",
+      "phone": "+79000000001",
+      "city": "Новосибирск",
+      "avatar": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$0c944c5e31b6f2111298b9ac$a4SPdiZksilUwaASGfZ/6mxgrY8ffv1R/OYS7/obbR0=",
+      "last_login": "2026-11-15T09:00:00Z",
+      "is_superuser": false,
+      "first_name": "Иван",
+      "last_name": "Петров",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-10-01T10:00:00Z",
+      "email": "ivan@example.com",
+      "phone": "+79000000002",
+      "city": "Москва",
+      "avatar": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$4c32478b1de11c6a2465f080$3rBCwXXPZ6GF7HJ8bzkMtF43qeXx+Kq0f3QlckoteYY=",
+      "last_login": "2026-11-15T09:00:00Z",
+      "is_superuser": false,
+      "first_name": "Мария",
+      "last_name": "Иванова",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-10-01T10:00:00Z",
+      "email": "maria@example.com",
+      "phone": "+79000000003",
+      "city": "Казань",
+      "avatar": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$8c065cc3e73938a21284935d$frmFqsdvtI94OJUeGpYLYLZlNzuB8UyyQo4aDGrL2iA=",
+      "last_login": "2026-11-15T09:00:00Z",
+      "is_superuser": false,
+      "first_name": "Павел",
+      "last_name": "Смирнов",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-10-01T10:00:00Z",
+      "email": "pavel@example.com",
+      "phone": "+79000000004",
+      "city": "Екатеринбург",
+      "avatar": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$1600b29c00e0007380e4b469$d/Qgl4QDLnXIPCkAwcqoTO+1fQpr4ZBrbgmNt27qpDc=",
+      "last_login": "2026-11-15T09:00:00Z",
+      "is_superuser": false,
+      "first_name": "Ольга",
+      "last_name": "Кузнецова",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-10-01T10:00:00Z",
+      "email": "olga@example.com",
+      "phone": "+79000000005",
+      "city": "Санкт-Петербург",
+      "avatar": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$1db9411556cbae59047e0586$iaBj/waPeTtLBz9EpEu5FP4IfxOceXuNCvnflBSiStc=",
+      "last_login": "2026-11-15T09:00:00Z",
+      "is_superuser": false,
+      "first_name": "Сергей",
+      "last_name": "Волков",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-10-01T10:00:00Z",
+      "email": "sergey@example.com",
+      "phone": "+79000000006",
+      "city": "Самара",
+      "avatar": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "lms.course",
+    "pk": 1,
+    "fields": {
+      "title": "Python с нуля",
+      "preview": null,
+      "description": "Базовый курс по программированию на Python для начинающих.",
+      "created_at": "2026-10-05T09:00:00Z",
+      "updated_at": "2026-10-05T09:00:00Z"
+    }
+  },
+  {
+    "model": "lms.course",
+    "pk": 2,
+    "fields": {
+      "title": "Django для веб-разработчиков",
+      "preview": null,
+      "description": "Изучаем Django: модели, представления, шаблоны и формы.",
+      "created_at": "2026-10-06T09:00:00Z",
+      "updated_at": "2026-10-06T09:00:00Z"
+    }
+  },
+  {
+    "model": "lms.course",
+    "pk": 3,
+    "fields": {
+      "title": "SQL и базы данных",
+      "preview": null,
+      "description": "Проектирование баз данных и язык SQL на практике.",
+      "created_at": "2026-10-07T09:00:00Z",
+      "updated_at": "2026-10-07T09:00:00Z"
+    }
+  },
+  {
+    "model": "lms.course",
+    "pk": 4,
+    "fields": {
+      "title": "JavaScript с нуля",
+      "preview": null,
+      "description": "Основы JavaScript: синтаксис, DOM, события.",
+      "created_at": "2026-10-08T09:00:00Z",
+      "updated_at": "2026-10-08T09:00:00Z"
+    }
+  },
+  {
+    "model": "lms.course",
+    "pk": 5,
+    "fields": {
+      "title": "Алгоритмы и структуры данных",
+      "preview": null,
+      "description": "Сортировки, поиск, деревья и графы с примерами.",
+      "created_at": "2026-10-09T09:00:00Z",
+      "updated_at": "2026-10-09T09:00:00Z"
+    }
+  },
+  {
+    "model": "lms.course",
+    "pk": 6,
+    "fields": {
+      "title": "Git и командная работа",
+      "preview": null,
+      "description": "Системы контроля версий, ветвление и совместная разработка.",
+      "created_at": "2026-10-10T09:00:00Z",
+      "updated_at": "2026-10-10T09:00:00Z"
+    }
+  },
+  {
+    "model": "lms.lesson",
+    "pk": 1,
+    "fields": {
+      "course": 1,
+      "title": "Введение в Python",
+      "preview": null,
+      "description": "Установка Python, первая программа, переменные.",
+      "video_url": "https://www.youtube.com/watch?v=abc123",
+      "created_at": "2026-10-11T10:00:00Z",
+      "updated_at": "2026-10-11T10:00:00Z"
+    }
+  },
+  {
+    "model": "lms.lesson",
+    "pk": 2,
+    "fields": {
+      "course": 1,
+      "title": "Типы данных и условия",
+      "preview": null,
+      "description": "Числа, строки, списки и операторы ветвления.",
+      "video_url": "https://www.youtube.com/watch?v=def456",
+      "created_at": "2026-10-12T10:00:00Z",
+      "updated_at": "2026-10-12T10:00:00Z"
+    }
+  },
+  {
+    "model": "lms.lesson",
+    "pk": 3,
+    "fields": {
+      "course": 2,
+      "title": "Начало работы с Django",
+      "preview": null,
+      "description": "Создание проекта, структура приложения.",
+      "video_url": null,
+      "created_at": "2026-10-13T10:00:00Z",
+      "updated_at": "2026-10-13T10:00:00Z"
+    }
+  },
+  {
+    "model": "lms.lesson",
+    "pk": 4,
+    "fields": {
+      "course": 2,
+      "title": "Модели и миграции",
+      "preview": null,
+      "description": "Описание моделей и работа с миграциями.",
+      "video_url": "https://www.youtube.com/watch?v=ghi789",
+      "created_at": "2026-10-14T10:00:00Z",
+      "updated_at": "2026-10-14T10:00:00Z"
+    }
+  },
+  {
+    "model": "lms.lesson",
+    "pk": 5,
+    "fields": {
+      "course": 3,
+      "title": "Основы SELECT",
+      "preview": null,
+      "description": "Простые запросы, фильтрация и сортировка.",
+      "video_url": null,
+      "created_at": "2026-10-15T10:00:00Z",
+      "updated_at": "2026-10-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "lms.lesson",
+    "pk": 6,
+    "fields": {
+      "course": 5,
+      "title": "Сортировки: обзор",
+      "preview": null,
+      "description": "Пузырьком, вставками и их сложность.",
+      "video_url": null,
+      "created_at": "2026-10-16T10:00:00Z",
+      "updated_at": "2026-10-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "users.payment",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "paid_course": 1,
+      "paid_lesson": null,
+      "payment_date": "2026-11-01T14:30:00Z",
+      "amount": 15000,
+      "payment_method": "transfer"
+    }
+  },
+  {
+    "model": "users.payment",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "paid_course": 1,
+      "paid_lesson": null,
+      "payment_date": "2026-11-02T10:00:00Z",
+      "amount": 15000,
+      "payment_method": "cash"
+    }
+  },
+  {
+    "model": "users.payment",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "paid_course": 2,
+      "paid_lesson": null,
+      "payment_date": "2026-11-03T11:15:00Z",
+      "amount": 18000,
+      "payment_method": "transfer"
+    }
+  },
+  {
+    "model": "users.payment",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "paid_course": null,
+      "paid_lesson": 1,
+      "payment_date": "2026-11-04T18:45:00Z",
+      "amount": 2500,
+      "payment_method": "cash"
+    }
+  },
+  {
+    "model": "users.payment",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "paid_course": null,
+      "paid_lesson": 2,
+      "payment_date": "2026-11-05T12:20:00Z",
+      "amount": 2500,
+      "payment_method": "transfer"
+    }
+  },
+  {
+    "model": "users.payment",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "paid_course": null,
+      "paid_lesson": 3,
+      "payment_date": "2026-11-06T09:10:00Z",
+      "amount": 3000,
+      "payment_method": "cash"
+    }
+  }
+]

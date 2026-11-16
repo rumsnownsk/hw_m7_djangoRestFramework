@@ -10,9 +10,8 @@ from .models import Course, Lesson
 
 class LessonListCreateAPIView(generics.ListCreateAPIView):
     """GET список уроков + POST создание"""
-
-    serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    serializer_class = LessonSerializer
 
 
 class LessonDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -22,6 +21,5 @@ class LessonDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 class CourseViewSet(viewsets.ModelViewSet):
     """CRUD для курсов: list, retrieve, create, update, destroy"""
-
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
