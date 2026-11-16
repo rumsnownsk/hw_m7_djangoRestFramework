@@ -4,6 +4,7 @@ from rest_framework import generics, viewsets
 from lms.serializer import CourseSerializer, LessonSerializer
 
 from .models import Course, Lesson
+from users.models import Payment
 
 # Create your views here.
 

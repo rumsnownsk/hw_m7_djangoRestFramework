@@ -42,7 +42,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    "core"
+    "rest_framework",
+    "lms",
+    "users",
+    "core",
+    "django_filters"
 ]
 
 MIDDLEWARE = [
@@ -144,7 +148,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_ROOT = BASE_DIR / "media"
 
-INSTALLED_APPS += ["rest_framework", "lms", "users"]
 AUTH_USER_MODEL = "users.User"
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -154,3 +157,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     # остальные валидаторы можно убрать или оставить по желанию
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}

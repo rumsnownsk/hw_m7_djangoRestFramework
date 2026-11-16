@@ -1,6 +1,7 @@
 from rest_framework.serializers import SerializerMethodField, ModelSerializer
 
 from .models import Course, Lesson
+from users.models import Payment
 
 
 class LessonDetailSerializer(ModelSerializer):
