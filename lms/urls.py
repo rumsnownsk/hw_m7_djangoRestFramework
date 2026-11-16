@@ -9,7 +9,6 @@ app_name = LmsConfig.name
 
 
 router = DefaultRouter()
-# ViewSet из под капота предоставляет комплекс CRUD-операций
 router.register(r"courses", CourseViewSet, basename="courses")
 
 urlpatterns = [
