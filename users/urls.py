@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
 from users.apps import UsersConfig
-from users.views import UserCreateAPIView, UserListAPIView, UserDetailAPIView
+from users.views import *
 
 app_name = UsersConfig.name
 
@@ -30,5 +30,7 @@ urlpatterns = [
         TokenRefreshView.as_view(permission_classes=(AllowAny,)),
         name="token_refresh",
     ),
-    path("current/", UserDetailAPIView.as_view(), name='current-user')
+    path("current/", UserCurrentAPIView.as_view(), name='current-user'),
+
+    path("<int:pk>/", UserRetrieveUpdateAPIView.as_view(), name='detail-user')
 ]

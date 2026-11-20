@@ -19,8 +19,19 @@ class NotModer(permissions.BasePermission):
 
 
 class IsOwner(permissions.BasePermission):
-    message = "Действие доступно только владельцу."
+    message = "Вы можете управлять только своим профилем."
 
     def has_object_permission(self, request, view, obj):
         return obj.owner == request.user
+
+
+class IsCurrentUser(permissions.BasePermission):
+    message = "Вы можете управлять только своим профилем."
+
+    # has_object_permission: проверка конкретного объекта
+    def has_object_permission(self, request, view, obj):
+        # obj — это тот User, которого DRF нашёл по pk в URL
+        # request.user — тот, кто делает запрос
+        return obj.id == request.user.id
+        # или проще: return obj == request.user
 

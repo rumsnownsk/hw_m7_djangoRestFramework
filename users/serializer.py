@@ -12,6 +12,16 @@ class PaymentSerializer(ModelSerializer):
         fields = "__all__"
 
 
+class UserShortSerializer(ModelSerializer):
+    lessons = LessonShortSerializer(many=True, read_only=True)
+    courses = CourseShortSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        # password включаем в fields, а exclude убираем совсем
+        fields = ["id", "email", "city", "avatar", "lessons", "courses"]
+
+
 class UserSerializer(ModelSerializer):
     is_moder = serializers.SerializerMethodField()
     lessons = LessonShortSerializer(many=True, read_only=True)
@@ -35,4 +45,5 @@ class UserSerializer(ModelSerializer):
         user = User.objects.create_user(**validated_data)
         # print("SAVED PASSWORD:", user.password)  # хеш или пустота?
         return user
+
 
