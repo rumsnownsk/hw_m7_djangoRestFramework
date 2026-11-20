@@ -1,5 +1,7 @@
 from django.db import models
 
+from config import settings
+
 
 # Create your models here.
 class Course(models.Model):
@@ -20,6 +22,16 @@ class Course(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
         verbose_name="Дата изменения",
+    )
+
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Автор",
+        help_text="Указать автора",
+        related_name="courses",
     )
 
     def __str__(self):
@@ -58,6 +70,16 @@ class Lesson(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
         verbose_name="Дата изменения",
+    )
+
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Автор",
+        help_text="Указать автора",
+        related_name="lessons",
     )
 
     def __str__(self):
