@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from lms.serializer import LessonShortSerializer
+from lms.serializer import LessonShortSerializer, CourseShortSerializer
 from .models import Payment, User
 from .permissions import IsModer
 
@@ -15,11 +15,12 @@ class PaymentSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     is_moder = serializers.SerializerMethodField()
     lessons = LessonShortSerializer(many=True, read_only=True)
+    courses = CourseShortSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
         # password включаем в fields, а exclude убираем совсем
-        fields = ["id", "email", "password", "phone", "city", "avatar", "is_moder", "lessons"]
+        fields = ["id", "email", "password", "phone", "city", "avatar", "is_moder", "lessons", "courses"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def get_is_moder(self, obj):

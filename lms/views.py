@@ -1,11 +1,12 @@
 #views.py
+from django.contrib.auth.base_user import AbstractBaseUser
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.filters import OrderingFilter
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from lms.serializer import CourseSerializer, LessonSerializer
+from lms.serializer import *
 from users.permissions import IsModer, IsOwner, NotModer
 
 from .models import Course, Lesson
@@ -30,8 +31,13 @@ class LessonListCreateAPIView(generics.ListCreateAPIView):
         if self.request.method == "POST":
             self.permission_classes = [IsAuthenticated, NotModer]
         else:
-            self.permission_classes = [IsAuthenticated]
+            self.permission_classes = [AllowAny,]
         return [permission() for permission in self.permission_classes]
+
+    def get_serializer_class(self):
+        if self.request.user.is_authenticated:
+            return LessonSerializer
+        return LessonShortSerializer
 
 
 class LessonRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -58,3 +64,22 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def get_permissions(self):
+        if self.action == "create":
+            self.permission_classes = (IsAuthenticated, NotModer)
+        elif self.action in ("update", "partial_update"):
+            self.permission_classes = (IsAuthenticated, IsModer | IsOwner)
+        elif self.action in ("destroy",):
+            # удалять может только владелец, модераторам нельзя
+            self.permission_classes = (IsAuthenticated, NotModer, IsOwner)
+        else:
+            # GET
+            self.permission_classes = (AllowAny,)
+            # pass
+        return [permission() for permission in self.permission_classes]
+
+    def get_serializer_class(self):
+        if self.request.user.is_authenticated:
+            return CourseSerializer
+        return  CourseShortSerializer
