@@ -24,6 +24,10 @@ class LessonListCreateAPIView(generics.ListCreateAPIView):
         'owner': ['exact', 'isnull']
     }
 
+    def get_queryset(self):
+        return Lesson.objects.filter(owner=self.request.user)
+
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
@@ -31,7 +35,7 @@ class LessonListCreateAPIView(generics.ListCreateAPIView):
         if self.request.method == "POST":
             self.permission_classes = [IsAuthenticated, NotModer]
         else:
-            self.permission_classes = [AllowAny,]
+            self.permission_classes = [IsAuthenticated,]
         return [permission() for permission in self.permission_classes]
 
     def get_serializer_class(self):
@@ -75,7 +79,7 @@ class CourseViewSet(viewsets.ModelViewSet):
             self.permission_classes = (IsAuthenticated, NotModer, IsOwner)
         else:
             # GET
-            self.permission_classes = (AllowAny,)
+            self.permission_classes = (IsAuthenticated,)
             # pass
         return [permission() for permission in self.permission_classes]
 

@@ -45,12 +45,12 @@ class UserCurrentAPIView(RetrieveAPIView):
         # Мы сами говорим: «объект — это request.user»
         return self.request.user
 
-class UserRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
     def get_permissions(self):
-        if self.request.method in ("PUT", "PATCH"):
+        if self.request.method in ("PUT", "PATCH", "DELETE"):
             self.permission_classes = (IsAuthenticated, IsCurrentUser)
         else:
             self.permission_classes = (IsAuthenticated,)

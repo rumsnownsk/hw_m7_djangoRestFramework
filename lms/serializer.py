@@ -13,7 +13,7 @@ class LessonSerializer(ModelSerializer):
         extra_kwargs = {
             # "owner": {"read_only": True}
         }
-        read_only_fields = ['course', 'created_at']
+        read_only_fields = ['created_at']
 
     def get_course_detail(self, obj):
         if obj.course is None:
@@ -46,6 +46,7 @@ class CourseSerializer(ModelSerializer):
         model = Course
         # fields = ["id", "title", "description", "lessons", "count_lessons"]
         fields = '__all__'
+        read_only_fields = ['owner']
 
     def get_lessons(self, course):
         return Lesson.objects.filter(course=course)
@@ -56,5 +57,5 @@ class CourseSerializer(ModelSerializer):
 
 class CourseShortSerializer(ModelSerializer):
     class Meta:
-        model = Lesson
+        model = Course
         fields = ["id", "title", "description"]

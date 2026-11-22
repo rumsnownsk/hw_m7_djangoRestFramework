@@ -32,5 +32,5 @@ urlpatterns = [
     ),
     path("current/", UserCurrentAPIView.as_view(), name='current-user'),
 
-    path("<int:pk>/", UserRetrieveUpdateAPIView.as_view(), name='detail-user')
+    path("<int:pk>/", UserRetrieveUpdateDestroyAPIView.as_view(), name='detail-user')
 ]
