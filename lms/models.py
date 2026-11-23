@@ -1,5 +1,7 @@
 from django.db import models
 
+from config import settings
+
 
 # Create your models here.
 class Course(models.Model):
@@ -22,12 +24,23 @@ class Course(models.Model):
         verbose_name="Дата изменения",
     )
 
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Автор",
+        help_text="Указать автора",
+        related_name="courses",
+    )
+
     def __str__(self):
         return f"курс: {self.title}"
 
     class Meta:
         verbose_name = "Курс"
         verbose_name_plural = "Курсы"
+        ordering = ['id']
 
 
 class Lesson(models.Model):
@@ -60,9 +73,20 @@ class Lesson(models.Model):
         verbose_name="Дата изменения",
     )
 
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Автор",
+        help_text="Указать автора",
+        related_name="lessons",
+    )
+
     def __str__(self):
         return f"Урок: {self.title}"
 
     class Meta:
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
+        ordering = ['id']
