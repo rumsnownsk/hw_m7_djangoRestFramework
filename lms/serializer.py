@@ -9,7 +9,7 @@ class LessonSerializer(ModelSerializer):
     """ Вывод Уроков """
     course_detail = SerializerMethodField(read_only=True)
     title = CharField(validators=[validate_forbidden_words])
-    video_url = URLField(validators=[vld_video_url])
+    video_url = URLField(validators=[vld_video_url], required=False)
 
     class Meta:
         model = Lesson
