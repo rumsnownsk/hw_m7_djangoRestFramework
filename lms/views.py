@@ -10,6 +10,8 @@ from lms.serializer import *
 from users.permissions import IsModer, IsOwner, NotModer
 
 from .models import Course, Lesson
+from .paginations import CustomPagination
+
 
 class LessonListCreateAPIView(generics.ListCreateAPIView):
     """GET список уроков + POST создание"""
@@ -23,6 +25,7 @@ class LessonListCreateAPIView(generics.ListCreateAPIView):
         'course': ['exact', 'isnull'],
         'owner': ['exact', 'isnull']
     }
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         return Lesson.objects.filter(owner=self.request.user)
@@ -65,6 +68,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     """CRUD для курсов: list, retrieve, create, update, destroy"""
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+    pagination_class = CustomPagination
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

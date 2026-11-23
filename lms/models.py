@@ -62,7 +62,7 @@ class Lesson(models.Model):
     description = models.TextField(
         verbose_name="Описание курса", help_text="Введите описание курса"
     )
-    video_url = models.URLField(verbose_name="Ссылка на видео", blank=True, null=True)
+    video_url = models.URLField(verbose_name="Ссылка на видео", blank=True, null=True, help_text="Обязательно Youtube.com")
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Дата создания",
