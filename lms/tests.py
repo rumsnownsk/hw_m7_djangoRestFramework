@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from users.models import User
-from .models import Lesson, Course
+from .models import Lesson, Course, Subscription
 
 
 class LessonTestCase(APITestCase):
@@ -49,7 +49,6 @@ class LessonTestCase(APITestCase):
             "owner": self.user.pk
         }
         response = self.client.post(url, data)
-        # print(">>>>>:", response.json())
         self.assertEqual(
             response.status_code, status.HTTP_201_CREATED
         )
@@ -161,7 +160,6 @@ class CourseTestCase(APITestCase):
             "description": "desc 2 for API_test",
         }
         response = self.client.post(url, data)
-        # print(">>>>>:", response.json())
         self.assertEqual(
             response.status_code, status.HTTP_201_CREATED
         )
@@ -218,6 +216,7 @@ class CourseTestCase(APITestCase):
             "results": [
                 {
                     "id": self.course.pk,
+                    "is_subscribed": False,
                     "lessons": [],
                     "count_lessons": self.course.lessons.count(),
                     "title": "Course for Lesson's test",
@@ -233,3 +232,38 @@ class CourseTestCase(APITestCase):
             response.status_code, status.HTTP_200_OK
         )
         self.assertEqual(response_json, result)
+
+class SubscribeToggleCase(APITestCase):
+    maxDiff = None
+    def setUp(self):
+        self.user = User.objects.create(email="testUser@test.com")
+        self.course = Course.objects.create(
+            title="Course for Lesson's test", description="desc course test", owner=self.user
+        )
+
+        self.client.force_authenticate(user=self.user)
+
+    def test_subscribe(self):
+        """Первый POST создаёт подписку"""
+        url = reverse("lms:subscribe-toggle", args=(self.course.pk,))
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Subscription.objects.count(), 1)
+
+        subscription = Subscription.objects.first()
+        self.assertEqual(subscription.user, self.user)
+        self.assertEqual(subscription.course, self.course)
+
+    def test_unsubscribe(self):
+        """Второй POST на тот же курс удаляет подписку"""
+        Subscription.objects.create(user=self.user, course=self.course)
+
+        url = reverse("lms:subscribe-toggle", args=(self.course.pk,))
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Subscription.objects.count(), 0)
+
+
+

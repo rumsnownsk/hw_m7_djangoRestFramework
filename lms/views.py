@@ -1,15 +1,17 @@
 #views.py
-from django.contrib.auth.base_user import AbstractBaseUser
 from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import get_object_or_404
+
 from rest_framework import generics, viewsets
-from rest_framework.exceptions import PermissionDenied
 from rest_framework.filters import OrderingFilter
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from lms.serializer import *
 from users.permissions import IsModer, IsOwner, NotModer
 
-from .models import Course, Lesson
+from .models import Course, Lesson, Subscription
 from .paginations import CustomPagination
 
 
@@ -91,3 +93,23 @@ class CourseViewSet(viewsets.ModelViewSet):
         if self.request.user.is_authenticated:
             return CourseSerializer
         return  CourseShortSerializer
+
+class SubscriptionToggleAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+
+    def post(self, request, pk):
+        user = request.user
+        course = get_object_or_404(Course, pk=pk)
+
+        subscription = Subscription.objects.filter(user=user, course=course)
+
+        if subscription.exists():
+            subscription.delete()
+            message = "Подписка удалена"
+        else:
+            Subscription.objects.create(user=user, course_id=pk)
+            message = "Подписка добавлена"
+
+        return Response({"message": message})
+

@@ -49,7 +49,7 @@ class CourseSerializer(ModelSerializer):
     lessons = LessonShortSerializer(many=True, read_only=True)
     count_lessons = SerializerMethodField()
     title = CharField(validators=[validate_forbidden_words])
-
+    is_subscribed = SerializerMethodField()
 
     class Meta:
         model = Course
@@ -62,6 +62,10 @@ class CourseSerializer(ModelSerializer):
 
     def get_count_lessons(self, obj):
         return obj.lessons.count()
+
+    def get_is_subscribed(self, obj: Course) -> bool:
+        user = self.context.get('request').user
+        return obj.subscriptions.filter(user=user).exists()
 
 
 class CourseShortSerializer(ModelSerializer):
