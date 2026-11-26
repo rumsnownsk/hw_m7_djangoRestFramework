@@ -1,10 +1,15 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.fields import URLField
+from rest_framework.serializers import ModelSerializer, SerializerMethodField, CharField
 
 from .models import Course, Lesson
+from .validators import validate_forbidden_words, vld_video_url
 
 
 class LessonSerializer(ModelSerializer):
+    """ Вывод Уроков """
     course_detail = SerializerMethodField(read_only=True)
+    title = CharField(validators=[validate_forbidden_words])
+    video_url = URLField(validators=[vld_video_url], required=False)
 
     class Meta:
         model = Lesson
@@ -14,6 +19,7 @@ class LessonSerializer(ModelSerializer):
             # "owner": {"read_only": True}
         }
         read_only_fields = ['created_at']
+        # validators =
 
     def get_course_detail(self, obj):
         if obj.course is None:
@@ -39,8 +45,11 @@ class LessonShortSerializer(ModelSerializer):
 
 
 class CourseSerializer(ModelSerializer):
+    """ Вывод Курсов """
     lessons = LessonShortSerializer(many=True, read_only=True)
     count_lessons = SerializerMethodField()
+    title = CharField(validators=[validate_forbidden_words])
+    is_subscribed = SerializerMethodField()
 
     class Meta:
         model = Course
@@ -53,6 +62,10 @@ class CourseSerializer(ModelSerializer):
 
     def get_count_lessons(self, obj):
         return obj.lessons.count()
+
+    def get_is_subscribed(self, obj: Course) -> bool:
+        user = self.context.get('request').user
+        return obj.subscriptions.filter(user=user).exists()
 
 
 class CourseShortSerializer(ModelSerializer):

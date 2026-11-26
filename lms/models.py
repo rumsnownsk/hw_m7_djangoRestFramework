@@ -62,7 +62,7 @@ class Lesson(models.Model):
     description = models.TextField(
         verbose_name="Описание курса", help_text="Введите описание курса"
     )
-    video_url = models.URLField(verbose_name="Ссылка на видео", blank=True, null=True)
+    video_url = models.URLField(verbose_name="Ссылка на видео", blank=True, null=True, help_text="Обязательно Youtube.com")
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Дата создания",
@@ -90,3 +90,40 @@ class Lesson(models.Model):
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
         ordering = ['id']
+
+
+class Subscription(models.Model):
+    """ Подписка пользователя на обновления курса. """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="subscriptions",
+        verbose_name="пользователь",
+    )
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        related_name="subscriptions",
+        verbose_name="курс"
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="дата подписки"
+    )
+
+    class Meta:
+        verbose_name = "подписка"
+        verbose_name_plural = "подписки"
+        constraints = [
+            # защита от двойной подписки на уровне базы
+            models.UniqueConstraint(
+                fields=('user', 'course'),
+                name="unique_user_course_subscription"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user} → {self.course}"
+
+
+
