@@ -25,19 +25,27 @@ class PaymentAdmin(admin.ModelAdmin):
 class UserAdmin(admin.ModelAdmin):
     list_filter = ("is_staff", "is_superuser", "city")
     list_display = ("id", "email", "phone", "city", "user_role")
-    ordering = ('-id',)
+    ordering = ("-id",)
     search_fields = ("email", "phone")
 
     def user_role(self, obj):
         if obj.is_superuser:
-            return format_html('<span style="{}">СуперЮзер</span>', 'color: red; font-weight: bold;' )
+            return format_html(
+                '<span style="{}">СуперЮзер</span>', "color: red; font-weight: bold;"
+            )
         elif obj.is_staff:
-            return format_html('<span style="{}">Администратор</span>', 'color: orange; font-weight: bold;' )
+            return format_html(
+                '<span style="{}">Администратор</span>',
+                "color: orange; font-weight: bold;",
+            )
         else:
             return "Пользователь"
 
     user_role.short_description = "Роль"
-    user_role.admin_order_field = "is_staff"  # Позволяет кликать и сортировать по этому столбцу
+    user_role.admin_order_field = (
+        "is_staff"  # Позволяет кликать и сортировать по этому столбцу
+    )
+
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):

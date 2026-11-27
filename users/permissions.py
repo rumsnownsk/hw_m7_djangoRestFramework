@@ -1,21 +1,24 @@
-#permissions.py
+# permissions.py
 from rest_framework import permissions
 
 
 class IsModer(permissions.BasePermission):
-    """ Проверяет, является ли пользователь Модератором."""
-    message = 'some text'
+    """Проверяет, является ли пользователь Модератором."""
+
+    message = "some text"
 
     def has_permission(self, request, view):
         # print("METHOD:", request.method, "PERMS:", view.permission_classes)
-        return request.user.groups.filter(name='moders').exists()
+        return request.user.groups.filter(name="moders").exists()
+
 
 class NotModer(permissions.BasePermission):
     """Запрещает действие модераторам."""
+
     message = "Модераторы не могут выполнять это действие."
 
     def has_permission(self, request, view):
-        return not request.user.groups.filter(name='moders').exists()
+        return not request.user.groups.filter(name="moders").exists()
 
 
 class IsOwner(permissions.BasePermission):
@@ -34,4 +37,3 @@ class IsCurrentUser(permissions.BasePermission):
         # request.user — тот, кто делает запрос
         return obj.id == request.user.id
         # или проще: return obj == request.user
-

@@ -1,6 +1,8 @@
-#views.py
+# views.py
+from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
+from drf_yasg.utils import swagger_auto_schema
 
 from rest_framework import generics, viewsets
 from rest_framework.filters import OrderingFilter
@@ -24,14 +26,13 @@ class LessonListCreateAPIView(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = {
         # /lessons/?course__isnull=true
-        'course': ['exact', 'isnull'],
-        'owner': ['exact', 'isnull']
+        "course": ["exact", "isnull"],
+        "owner": ["exact", "isnull"],
     }
     pagination_class = CustomPagination
 
     def get_queryset(self):
         return Lesson.objects.filter(owner=self.request.user)
-
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -40,7 +41,9 @@ class LessonListCreateAPIView(generics.ListCreateAPIView):
         if self.request.method == "POST":
             self.permission_classes = [IsAuthenticated, NotModer]
         else:
-            self.permission_classes = [IsAuthenticated,]
+            self.permission_classes = [
+                IsAuthenticated,
+            ]
         return [permission() for permission in self.permission_classes]
 
     def get_serializer_class(self):
@@ -66,8 +69,15 @@ class LessonRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
         return [permission() for permission in self.permission_classes]
 
 
+@method_decorator(
+    name="list",
+    decorator=swagger_auto_schema(
+        operation_description="description from swagger_auto_schema via method_decorator"
+    ),
+)
 class CourseViewSet(viewsets.ModelViewSet):
     """CRUD для курсов: list, retrieve, create, update, destroy"""
+
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
     pagination_class = CustomPagination
@@ -92,11 +102,11 @@ class CourseViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.request.user.is_authenticated:
             return CourseSerializer
-        return  CourseShortSerializer
+        return CourseShortSerializer
+
 
 class SubscriptionToggleAPIView(APIView):
     permission_classes = [IsAuthenticated]
-
 
     def post(self, request, pk):
         user = request.user
@@ -112,4 +122,3 @@ class SubscriptionToggleAPIView(APIView):
             message = "Подписка добавлена"
 
         return Response({"message": message})
-

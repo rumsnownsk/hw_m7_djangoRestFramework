@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
 
 
 # Create your models here.
@@ -77,6 +78,12 @@ class Payment(models.Model):
         ("transfer", "Перевод на счет"),
     ]
 
+    STATUS_CHOICES = [
+        ("pending", "Ожидает оплаты"),
+        ("paid", "Оплачен"),
+        ("canceled", "Отменён"),
+    ]
+
     user = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -102,7 +109,9 @@ class Payment(models.Model):
         related_name="payments",
     )
     payment_date = models.DateTimeField(
-        auto_now_add=False, verbose_name="Дата оплаты", help_text="Дата и время оплаты"
+        default=timezone.now,
+        verbose_name="Дата оплаты",
+        help_text="Дата и время оплаты",
     )
     amount = models.PositiveIntegerField(
         verbose_name="Сумма оплаты", help_text="Сумма оплаты в рублях"
@@ -112,6 +121,31 @@ class Payment(models.Model):
         choices=PAYMENT_METHOD_CHOICES,
         verbose_name="Способ оплаты",
     )
+    session_id = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        verbose_name="ID сессии",
+        help_text="Укажите ID сессии",
+    )
+
+    link = models.URLField(
+        max_length=500,
+        blank=True,
+        null=True,
+        verbose_name="Ссылка на оплату",
+        help_text="Укажите ссылку на оплату",
+    )
+
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default="pending",
+        verbose_name="Статус",
+    )
+
+    def get_paid_object(self):
+        return self.paid_course or self.paid_lesson
 
     class Meta:
         verbose_name = "Платёж"

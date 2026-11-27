@@ -6,7 +6,8 @@ from .validators import validate_forbidden_words, vld_video_url
 
 
 class LessonSerializer(ModelSerializer):
-    """ Вывод Уроков """
+    """Вывод Уроков"""
+
     course_detail = SerializerMethodField(read_only=True)
     title = CharField(validators=[validate_forbidden_words])
     video_url = URLField(validators=[vld_video_url], required=False)
@@ -18,7 +19,7 @@ class LessonSerializer(ModelSerializer):
         extra_kwargs = {
             # "owner": {"read_only": True}
         }
-        read_only_fields = ['created_at']
+        read_only_fields = ["created_at"]
         # validators =
 
     def get_course_detail(self, obj):
@@ -38,6 +39,7 @@ class LessonShortSerializer(ModelSerializer):
         model = Lesson
         fields = ("id", "title", "description", "video_url")
 
+
 # class LessonShortSerializer(ModelSerializer):
 #     class Meta:
 #         model = Lesson
@@ -45,7 +47,8 @@ class LessonShortSerializer(ModelSerializer):
 
 
 class CourseSerializer(ModelSerializer):
-    """ Вывод Курсов """
+    """Вывод Курсов"""
+
     lessons = LessonShortSerializer(many=True, read_only=True)
     count_lessons = SerializerMethodField()
     title = CharField(validators=[validate_forbidden_words])
@@ -54,8 +57,8 @@ class CourseSerializer(ModelSerializer):
     class Meta:
         model = Course
         # fields = ["id", "title", "description", "lessons", "count_lessons"]
-        fields = '__all__'
-        read_only_fields = ['owner']
+        fields = "__all__"
+        read_only_fields = ["owner"]
 
     def get_lessons(self, course):
         return Lesson.objects.filter(course=course)
@@ -64,7 +67,7 @@ class CourseSerializer(ModelSerializer):
         return obj.lessons.count()
 
     def get_is_subscribed(self, obj: Course) -> bool:
-        user = self.context.get('request').user
+        user = self.context.get("request").user
         return obj.subscriptions.filter(user=user).exists()
 
 
